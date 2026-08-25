@@ -4,19 +4,20 @@ FastAPI server. It:
   1. Creates database tables if they don't exist yet
   2. Allows the frontend (running on a different domain, e.g. Netlify) to
      make requests to this backend (CORS)
-  3. Registers our endpoints (/auth/* and /products/*)
+  3. Registers our endpoints (/auth/*, /products/*, /products/{id}/sales/*,
+     /dashboard/*)
 """
 
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
-from app.routers import auth, products
+from app.routers import auth, products, sales, dashboard
 from app.auth.dependencies import get_current_user
 from app.models.user import User
 from app.schemas.user import UserOut
 
-# Creates all tables defined by our models (users, products, ...)
+# Creates all tables defined by our models (users, products, sales)
 # if they don't already exist in the database.
 Base.metadata.create_all(bind=engine)
 
@@ -35,6 +36,8 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(products.router)
+app.include_router(sales.router)
+app.include_router(dashboard.router)
 
 
 @app.get("/")
