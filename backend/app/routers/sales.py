@@ -44,7 +44,7 @@ def record_sale(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    get_owned_product(product_id, db, current_user)
+    product = get_owned_product(product_id, db, current_user)
 
     new_sale = Sale(
         product_id=product_id,
@@ -53,6 +53,12 @@ def record_sale(
     )
 
     db.add(new_sale)
+
+    # Reduce the product's current stock by the amount sold.
+    # We don't let stock go below zero, even if someone enters a
+    # sale quantity larger than what's actually in stock.
+    product.current_stock = max(0, product.current_stock - sale_data.quantity_sold)
+
     db.commit()
     db.refresh(new_sale)
 
