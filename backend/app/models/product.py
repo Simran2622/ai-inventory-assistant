@@ -30,3 +30,4 @@ class Product(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     owner = relationship("User", backref="products")
+    
