@@ -5,14 +5,14 @@ FastAPI server. It:
   2. Allows the frontend (running on a different domain, e.g. Netlify) to
      make requests to this backend (CORS)
   3. Registers our endpoints (/auth/*, /products/*, /products/{id}/sales/*,
-     /dashboard/*)
+     /dashboard/*, /products/{id}/insight)
 """
 
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
-from app.routers import auth, products, sales, dashboard
+from app.routers import auth, products, sales, dashboard, insight
 from app.auth.dependencies import get_current_user
 from app.models.user import User
 from app.schemas.user import UserOut
@@ -38,6 +38,7 @@ app.include_router(auth.router)
 app.include_router(products.router)
 app.include_router(sales.router)
 app.include_router(dashboard.router)
+app.include_router(insight.router)
 
 
 @app.get("/")
