@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products - AI Inventory Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="navbar">
+        <span>AI Inventory & Demand Assistant</span>
+        <div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="products.html">Products</a>
+            <a href="#" id="logout-link">Logout</a>
+        </div>
+    </div>
+
+    <div class="page-container">
+        <h1>Products</h1>
+
+        <!-- ADD PRODUCT FORM -->
+        <div class="form-section">
+            <h2>Add a New Product</h2>
+            <form id="add-product-form">
+                <div class="form-row">
+                    <input type="text" id="new-name" placeholder="Product name" required>
+                    <input type="text" id="new-category" placeholder="Category (optional)">
+                    <input type="number" id="new-stock" placeholder="Current stock" min="0" required>
+                    <input type="number" id="new-min-level" placeholder="Minimum stock level" min="0" required>
+                    <input type="number" id="new-lead-time" placeholder="Supplier lead time (days)" min="0" required>
+                    <button type="submit">Add Product</button>
+                </div>
+            </form>
+            <p id="add-product-message"></p>
+        </div>
+
+        <!-- PRODUCTS TABLE -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Stock</th>
+                    <th>Min Level</th>
+                    <th>Lead Time (days)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="products-table-body">
+                <!-- Filled in by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>

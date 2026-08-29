@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - AI Inventory Assistant</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="navbar">
+        <span>AI Inventory & Demand Assistant</span>
+        <div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="products.html">Products</a>
+            <a href="#" id="logout-link">Logout</a>
+        </div>
+    </div>
+
+    <div class="page-container">
+        <h1>Dashboard</h1>
+
+        <div class="summary-cards">
+            <div class="card">
+                <h3>Total Products</h3>
+                <p id="total-products">-</p>
+            </div>
+            <div class="card">
+                <h3>Total Stock Units</h3>
+                <p id="total-stock">-</p>
+            </div>
+            <div class="card low-stock">
+                <h3>Low Stock Products</h3>
+                <p id="low-stock-count">-</p>
+            </div>
+        </div>
+
+        <h2>Low Stock Products</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Current Stock</th>
+                    <th>Minimum Level</th>
+                </tr>
+            </thead>
+            <tbody id="low-stock-table-body">
+                <!-- Filled in by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

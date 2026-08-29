@@ -1,6 +1,6 @@
 """
 This file handles the AI part: taking already-calculated numbers and
-asking an LLM (Claude, by Anthropic) to turn them into a short, plain
+asking an LLM (Google's Gemini) to turn them into a short, plain
 English recommendation.
 
 IMPORTANT: this file does NOT calculate anything itself. It only
@@ -9,13 +9,13 @@ the AI's written response. All the real math happens in forecasting.py.
 """
 
 import os
-import anthropic
+from google import genai
 
 # Reads the API key from our .env file (same pattern as DATABASE_URL
 # and SECRET_KEY - never hardcoded, never committed to GitHub).
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 
 def generate_recommendation(
@@ -27,7 +27,7 @@ def generate_recommendation(
     trend: str,
 ) -> str:
     """
-    Sends the calculated numbers to Claude and asks for a short,
+    Sends the calculated numbers to Gemini and asks for a short,
     plain-English recommendation. The AI is only allowed to explain
     these numbers - it is explicitly told not to invent new numbers.
     """
@@ -50,18 +50,13 @@ whether they should reorder this product, and roughly how many units,
 based ONLY on the numbers above. Do not invent any numbers that are not
 given to you above. Keep the tone plain and simple."""
 
-    # This is the actual API call - sending our prompt to Claude and
+    # This is the actual API call - sending our prompt to Gemini and
     # waiting for a response.
-    response = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=200,
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
+    response = client.models.generate_content(
+        model="gemini-3.6-flash",
+        contents=prompt,
     )
 
-    # The response comes back as a list of "content blocks" - we expect
-    # just one block of text, so we grab its .text value.
-    recommendation_text = response.content[0].text
+    recommendation_text = response.text
 
     return recommendation_text
