@@ -9,7 +9,7 @@ change it in ONE place.
 
 // This is the base address of our backend. Right now it's our local
 // server. On Day 6, we'll change this one line to our deployed backend.
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "https://ai-inventory-assistant.onrender.com";
 
 
 // Saves the JWT token in the browser's storage, so it survives page
