@@ -9,7 +9,10 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 from app.config import DATABASE_URL
 
 # The "engine" is the object that actually knows how to talk to PostgreSQL.
-engine = create_engine(DATABASE_URL.replace("postgresql://", "postgresql+psycopg://", 1))
+engine = create_engine(
+    DATABASE_URL.replace("postgresql://", "postgresql+psycopg://", 1),
+    pool_pre_ping=True,
+)
 
 # SessionLocal is a factory that creates new database sessions when needed.
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
